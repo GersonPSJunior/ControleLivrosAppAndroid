@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Controle Livros</string>
+    <string name="insira_os_dados">Insira os dados</string>
+    <string name="nome_do_liivro">nome do liivro</string>
+    <string name="nome_do_autor">nome do autor</string>
+    <string name="paginas">paginas</string>
+    <string name="valor">Valor</string>
+    <string name="descricao">Descrição</string>
+    <string name="dashboard_livros">DashBoard Livros</string>
+    <string name="acompanhe_sua_lista_de_livros">Acompanhe sua Lista de livros</string>
+    <string name="detalhes_sobre_o_livro">Detalhes sobre o livro</string>
+    <string name="nome_do_livro">Nome do livro</string>
+    <string name="descri_o_do_livro">descrição do livro</string>
+    <string name="autor">autor</string>
+    <string name="status">status</string>
+    <string name="_200_paginas">200 paginas</string>
+    <string name="r_200_0">R$ 200,0</string>
+    <string name="livro">Livro</string>
+</resources>
