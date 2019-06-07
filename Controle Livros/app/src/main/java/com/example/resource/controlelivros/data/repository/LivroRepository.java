@@ -1,22 +1,28 @@
-package com.example.resource.controlelivros.repository;
+package com.example.resource.controlelivros.data.repository;
 
+import android.arch.lifecycle.LiveData;
 import android.content.Context;
-import android.os.AsyncTask;
-import android.util.Log;
 
 import com.example.resource.controlelivros.infra.dao.IManagerBookDao;
 import com.example.resource.controlelivros.infra.ControleLivrosDatabase;
 import com.example.resource.controlelivros.domain.Livro;
-import com.example.resource.controlelivros.repository.asynctask.LivroAsyncTask;
+import com.example.resource.controlelivros.data.repository.asynctask.LivroAsyncTask;
 
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 public class LivroRepository implements ILivroRepository {
 
-    private IManagerBookDao dao;
+    private final IManagerBookDao dao;
+    private LiveData<List<Livro>> listLivro;
+
+
     public LivroRepository(Context context) {
         dao = ControleLivrosDatabase.getInstance(context).dao();
+        listLivro = dao.listAll();
+    }
+
+    public LiveData<List<Livro>> getListLivro() {
+        return listLivro;
     }
 
     @Override
@@ -37,18 +43,18 @@ public class LivroRepository implements ILivroRepository {
         new LivroAsyncTask.Delete(dao).execute(livro);
     }
 
-    @Override
-    public List<Livro> listAll() {
-        try {
-            //return new AsyncTaskListAll().execute().get();
-            return new LivroAsyncTask.ListAll(dao).execute().get();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+//    @Override
+//    public LiveData<List<Livro>> listAll() {
+//        try {
+//            //return new AsyncTaskListAll().execute().get();
+//            return new LivroAsyncTask.ListAll(dao).execute().get();
+//        } catch (ExecutionException e) {
+//            e.printStackTrace();
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//        return null;
+//    }
 
     /*class AsyncTaskInsert extends AsyncTask<Livro, Void, Void>{
 

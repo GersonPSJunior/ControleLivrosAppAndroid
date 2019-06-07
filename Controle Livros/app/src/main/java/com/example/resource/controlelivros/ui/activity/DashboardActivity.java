@@ -1,5 +1,7 @@
 package com.example.resource.controlelivros.ui.activity;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,11 +15,11 @@ import android.widget.Toast;
 
 import com.example.resource.controlelivros.R;
 import com.example.resource.controlelivros.domain.Livro;
-import com.example.resource.controlelivros.repository.LivroRepository;
+import com.example.resource.controlelivros.data.repository.LivroRepository;
 import com.example.resource.controlelivros.ui.adapter.ListDashboardAdapter;
-import com.example.resource.controlelivros.ui.adapter.helper.callback.DashboardTouchHelperCallback;
 import com.example.resource.controlelivros.ui.adapter.listener.OnItemClickListener;
 import com.example.resource.controlelivros.util.ConstantsUtil;
+import com.example.resource.controlelivros.viewmodel.LivroViewModel;
 
 import java.util.List;
 
@@ -25,6 +27,7 @@ public class DashboardActivity extends AppCompatActivity {
 
     private ListDashboardAdapter adapter;
     private List<Livro> lista;
+    private LivroViewModel livroViewModel;
     private RecyclerView recyclerviewDashboard;
 
     @Override
@@ -32,6 +35,13 @@ public class DashboardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
+        livroViewModel = ViewModelProviders.of(this).get(LivroViewModel.class);
+        livroViewModel.getListLivro().observe(this, new Observer<List<Livro>>() {
+            @Override
+            public void onChanged(@Nullable List<Livro> livros) {
+                adapter = new ListDashboardAdapter(getApplicationContext(), livros);
+            }
+        });
         Button button = findViewById(R.id.button_dashboard);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,7 +108,8 @@ public class DashboardActivity extends AppCompatActivity {
     private void configuraRecyclerview() {
         recyclerviewDashboard = findViewById(R.id.recyclerview_dashboard);
         try {
-            lista = new LivroRepository(this).listAll();
+
+            //lista = new LivroRepository(this).listAll();
             configuraAdapter(recyclerviewDashboard);
             //lista = LivroDao.getGerenciaLivroDao();
         } catch (Exception e) {
@@ -125,7 +136,7 @@ public class DashboardActivity extends AppCompatActivity {
     }
 
     private void configuraAdapter(RecyclerView recyclerviewDashboard) {
-        adapter = new ListDashboardAdapter(this, lista);
+        //adapter = new ListDashboardAdapter(this, lista);
         recyclerviewDashboard.setAdapter(adapter);
         adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override

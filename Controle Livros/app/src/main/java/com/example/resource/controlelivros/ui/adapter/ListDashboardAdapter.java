@@ -18,7 +18,7 @@ import android.widget.Toast;
 
 import com.example.resource.controlelivros.R;
 import com.example.resource.controlelivros.domain.Livro;
-import com.example.resource.controlelivros.repository.LivroRepository;
+import com.example.resource.controlelivros.data.repository.LivroRepository;
 import com.example.resource.controlelivros.ui.activity.CadastroActivity;
 import com.example.resource.controlelivros.ui.adapter.listener.OnItemClickListener;
 import com.example.resource.controlelivros.util.ConstantsUtil;

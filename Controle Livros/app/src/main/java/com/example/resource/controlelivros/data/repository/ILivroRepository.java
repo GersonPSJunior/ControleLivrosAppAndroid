@@ -1,8 +1,6 @@
-package com.example.resource.controlelivros.repository;
+package com.example.resource.controlelivros.data.repository;
 
 import com.example.resource.controlelivros.domain.Livro;
-
-import java.util.List;
 
 public interface ILivroRepository {
 
@@ -12,5 +10,5 @@ public interface ILivroRepository {
 
     void delete(Livro livro);
 
-    List<Livro> listAll();
+    //LiveData<List<Livro>> listAll();
 }

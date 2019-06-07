@@ -4,10 +4,9 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 
-import com.example.resource.controlelivros.repository.ILivroRepository;
+import com.example.resource.controlelivros.data.repository.ILivroRepository;
 
 import java.io.Serializable;
-import java.util.List;
 
 @Entity(tableName = "livro")
 public class Livro implements Serializable {

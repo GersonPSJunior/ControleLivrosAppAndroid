@@ -3,6 +3,7 @@ package com.example.resource.controlelivros.ui.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,7 +20,7 @@ import android.widget.Toast;
 
 import com.example.resource.controlelivros.R;
 import com.example.resource.controlelivros.domain.Livro;
-import com.example.resource.controlelivros.repository.LivroRepository;
+import com.example.resource.controlelivros.data.repository.LivroRepository;
 import com.example.resource.controlelivros.util.ConstantsUtil;
 
 import java.util.Arrays;
@@ -44,19 +45,11 @@ public class CadastroActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro);
 
-        spinnerStatusCadastro = findViewById(R.id.spinner_status_cadastro);
-        List<String> lista = Arrays.asList(ConstantsUtil.SELECIONE_STATUS,
-                ConstantsUtil.LISTA_DE_COMPRA, ConstantsUtil.COMPRADO,
-                ConstantsUtil.LIDO, ConstantsUtil.EMPRESTADO);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, lista);
-        spinnerStatusCadastro.setAdapter(adapter);
+        loadUi();
+        loadListStatus();
+        verifyUserUpdate();
+        verifyItemSelectedSpinner();
 
-        editAutor = findViewById(R.id.edit_autor_livro_cadastro);
-        editDescricao = findViewById(R.id.edit_descricao_livro_cadastro);
-        editLivro = findViewById(R.id.edit_nome_livro_cadastro);
-        editPaginas = findViewById(R.id.edit_pagina_livro_cadastro);
-        editValor = findViewById(R.id.edit_preco_livro_cadastro);
-        imageCapaLivro = findViewById(R.id.image_capa_livro_cadastro);
         Button buttonTirarFoto = findViewById(R.id.button_tirar_foto);
         buttonTirarFoto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,21 +57,6 @@ public class CadastroActivity extends AppCompatActivity {
                 Intent intentGaleria = new Intent(Intent.ACTION_PICK, EXTERNAL_CONTENT_URI);
                 intentGaleria.setType("image/*");
                 startActivityForResult(intentGaleria, ConstantsUtil.REQUEST_CODE_CAMERA);
-            }
-        });
-        if(getIntent().getExtras() != null && getIntent().hasExtra(ConstantsUtil.EDIT_LIVRO)){
-            livro = (Livro) getIntent().getExtras().getSerializable(ConstantsUtil.EDIT_LIVRO);
-            recebeValores(livro);
-        }
-        spinnerStatusCadastro.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                spinnerValor = (String) spinnerStatusCadastro.getItemAtPosition(position);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
             }
         });
     }
@@ -162,5 +140,45 @@ public class CadastroActivity extends AppCompatActivity {
         );
         livro.setLivroRepository(new LivroRepository(this));
 
+    }
+    private void verifyItemSelectedSpinner() {
+        spinnerStatusCadastro.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                spinnerValor = (String) spinnerStatusCadastro.getItemAtPosition(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
+    private void verifyUserUpdate() {
+        if(getIntent().getExtras() != null && getIntent().hasExtra(ConstantsUtil.EDIT_LIVRO)){
+            livro = (Livro) getIntent().getExtras().getSerializable(ConstantsUtil.EDIT_LIVRO);
+            recebeValores(livro);
+        }
+    }
+
+    private void loadUi() {
+        spinnerStatusCadastro = findViewById(R.id.spinner_status_cadastro);
+        editAutor = findViewById(R.id.edit_autor_livro_cadastro);
+        editDescricao = findViewById(R.id.edit_descricao_livro_cadastro);
+        editLivro = findViewById(R.id.edit_nome_livro_cadastro);
+        editPaginas = findViewById(R.id.edit_pagina_livro_cadastro);
+        editValor = findViewById(R.id.edit_preco_livro_cadastro);
+        imageCapaLivro = findViewById(R.id.image_capa_livro_cadastro);
+    }
+
+    @NonNull
+    private void loadListStatus() {
+        List<String> lista = Arrays.asList(ConstantsUtil.SELECIONE_STATUS,
+                ConstantsUtil.LISTA_DE_COMPRA, ConstantsUtil.COMPRADO,
+                ConstantsUtil.LIDO, ConstantsUtil.EMPRESTADO);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_dropdown_item, lista);
+        spinnerStatusCadastro.setAdapter(adapter);
     }
 }
