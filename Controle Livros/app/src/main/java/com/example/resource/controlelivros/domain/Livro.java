@@ -25,17 +25,6 @@ public class Livro implements Serializable {
     private ILivroRepository livroRepository;
 
     public Livro(Long id, String nome, String descricao, Integer paginas, Double preco, String autor, String status) {
-//        if(nome.isEmpty())
-//            throw new Exception("Nome do Livro não pode ser vazio!");
-//        if(descricao.isEmpty())
-//            throw new Exception("Descrição do livro não pode ser vazia!");
-//        if(paginas <= 1)
-//            throw new Exception("O que é isso que você está lendo???");
-//        if(preco < 0)
-//            throw new Exception("Preço do livro não pode ser menor que zero!");
-//        if(autor == null)
-//            throw new Exception("Livro está sem autor!");
-
         this.id = id;
         this.nome = nome;
         this.descricao = descricao;

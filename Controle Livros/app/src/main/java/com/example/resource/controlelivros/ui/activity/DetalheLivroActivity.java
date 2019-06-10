@@ -36,7 +36,7 @@ public class DetalheLivroActivity extends AppCompatActivity {
             Livro livro = (Livro) extras.getSerializable(ConstantsUtil.LIVRO);
             textValorLivroDetalhe.setText(String.valueOf(livro.getPreco()));
             textStatusLivroDetalhe.setText(livro.getStatus());
-            textPaginasLivroDetalhe.setText(String.valueOf(livro.getPaginas())+ PAGINAS);
+            textPaginasLivroDetalhe.setText(livro.getPaginas()+ PAGINAS);
             textDescricaoLivroDetalhe.setText(livro.getDescricao());
             textNomeLivroDetalhe.setText(livro.getNome());
             textAutorLivroDetalhe.setText(livro.getAutor());

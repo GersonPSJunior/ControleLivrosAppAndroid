@@ -1,12 +1,10 @@
-package com.example.resource.controlelivros.repository.asynctask;
+package com.example.resource.controlelivros.data.repository.asynctask;
 
 import android.os.AsyncTask;
 import android.util.Log;
 
 import com.example.resource.controlelivros.domain.Livro;
 import com.example.resource.controlelivros.infra.dao.IManagerBookDao;
-
-import java.util.List;
 
 public class LivroAsyncTask {
 
@@ -61,20 +59,6 @@ public class LivroAsyncTask {
             }
             Log.e("***TESTE***", "Foi " + livros[0].getNome());
             return null;
-        }
-    }
-
-    public static class ListAll extends AsyncTask<Void, Void, List<Livro>> {
-
-        private IManagerBookDao dao;
-
-        public ListAll(IManagerBookDao dao) {
-            this.dao = dao;
-        }
-
-        @Override
-        protected List<Livro> doInBackground(Void... voids) {
-            return dao.listAll();
         }
     }
 }

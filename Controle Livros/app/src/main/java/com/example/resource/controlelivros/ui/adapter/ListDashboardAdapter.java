@@ -32,8 +32,11 @@ public class ListDashboardAdapter extends RecyclerView.Adapter<ListDashboardAdap
     private List<Livro> lista;
     private OnItemClickListener onItemClickListener;
 
-    public ListDashboardAdapter(Context context, List<Livro> lista) {
+    public ListDashboardAdapter(Context context) {
         this.context = context;
+    }
+
+    public void setLista(List<Livro> lista) {
         this.lista = lista;
     }
 
@@ -58,21 +61,25 @@ public class ListDashboardAdapter extends RecyclerView.Adapter<ListDashboardAdap
 
     @Override
     public void onBindViewHolder(@NonNull ListDashboardAdapter.DashboardViewHolder viewHolder, int i) {
-        Livro livro = lista.get(i);
-        viewHolder.vincula(livro);
+        if (lista != null) {
+            Livro livro = lista.get(i);
+            viewHolder.vincula(livro);
+        }
     }
 
-    public Livro getLivro(int position){
+    public Livro getLivro(int position) {
         return lista.get(position);
     }
 
     @Override
     public int getItemCount() {
-        return lista.size();
+        if(lista != null)
+            return lista.size();
+        return 0;
     }
 
     public class DashboardViewHolder extends RecyclerView.ViewHolder
-            implements View.OnCreateContextMenuListener{
+            implements View.OnCreateContextMenuListener {
 
         private final TextView textNomeLivro;
         private final TextView textDataLeitura;
@@ -125,21 +132,6 @@ public class ListDashboardAdapter extends RecyclerView.Adapter<ListDashboardAdap
             });
         }
 
-        /*private MenuItem.OnMenuItemClickListener onEditMenu = new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()){
-                    case 1:
-                        Toast.makeText(context, gerenciaLivro.getLivro().getNome(), Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(context, CadastroActivity.class);
-                        intent.putExtra("edita_livro", gerenciaLivro);
-                        context.startActivity(intent);
-                        break;
-                }
-                return true;
-            }
-        };*/
-
     }
 
     public void remove(final int adapterPosition, final Livro livro) {
@@ -151,6 +143,7 @@ public class ListDashboardAdapter extends RecyclerView.Adapter<ListDashboardAdap
                     public void onClick(DialogInterface dialog, int which) {
                         //GerenciarLivroDao.remolveLivro(adapterPosition);
                         new LivroRepository(context).delete(livro);
+                        lista.remove(livro);
                         notifyItemRemoved(adapterPosition);
                     }
                 })
@@ -163,10 +156,3 @@ public class ListDashboardAdapter extends RecyclerView.Adapter<ListDashboardAdap
                 .show();
     }
 }
-
-
-        /*Toast.makeText(context, "hdgahdgshagd", Toast.LENGTH_LONG).show();
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
-        Intent intent = new Intent(context, CadastroActivity.class);
-        intent.putExtra("adita_livro", gerenciaLivro);
-        context.startActivity(intent);*/

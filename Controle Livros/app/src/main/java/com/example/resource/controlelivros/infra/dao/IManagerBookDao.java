@@ -24,6 +24,6 @@ public interface IManagerBookDao {
     @Delete
     void delete(Livro livro);
 
-    @Query("SELECT * FROM livro")
+    @Query("SELECT * FROM livro ORDER BY livro.nome ASC")
     LiveData<List<Livro>> listAll();
 }
